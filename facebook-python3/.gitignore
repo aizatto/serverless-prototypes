@@ -1,0 +1,27 @@
+# Distribution / packaging
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Serverless directories
+.serverless{
+  "dev": "http://localhost:3000/facebook/callback/",
+  "prod": "https://91npcmlowb.execute-api.ap-southeast-1.amazonaws.com/prod/facebook/callback/"
+}
+
+node_modules
+.serverless
+__pycache__

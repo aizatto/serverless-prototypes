@@ -1,0 +1,63 @@
+service: facebook-python3
+
+plugins:
+  - serverless-iam-roles-per-function
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: python3.7
+  stage: dev
+  region: ap-southeast-1
+  memorySize: 128
+  environment:
+    STAGE: ${opt:stage}
+    REDIRECT_URI: ${file(./secrets.json):${opt:stage}}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - ssm:GetParameter
+      Resource:
+        - "arn:aws:ssm:${opt:region}:*:parameter/build.my/${opt:stage}/FACEBOOK_CLIENT_ID"
+        - "arn:aws:ssm:${opt:region}:*:parameter/build.my/${opt:stage}/FACEBOOK_CLIENT_SECRET"
+
+resources:
+  Resources:
+    ApiGatewayRestApi:
+      Type: AWS::ApiGateway::RestApi
+      Properties:
+        Name: ${self:service}-${self:provider.stage}
+
+functions:
+  login:
+    handler: handler.login
+    events:
+      - http:
+          path: /
+          method: get
+  callback:
+    handler: handler.callback
+    iamRoleStatementsInherit: true
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - ssm:PutParameter
+        Resource:
+          - "arn:aws:ssm:${opt:region}:*:parameter/build.my/${opt:stage}/FACEBOOK_ACCESS_TOKEN"
+    events:
+      - http:
+          path: /callback/
+          method: get
+  inspect:
+    handler: handler.inspect
+    iamRoleStatementsInherit: true
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - ssm:GetParameter
+        Resource:
+          - "arn:aws:ssm:${opt:region}:*:parameter/build.my/${opt:stage}/FACEBOOK_ACCESS_TOKEN"
+    events:
+      - http:
+          path: /inspect/
+          method: get

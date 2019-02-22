@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "serverless-offline": "^4.5.1"
+  },
+  "devDependencies": {
+    "serverless-iam-roles-per-function": "^1.0.4"
+  }
+}
