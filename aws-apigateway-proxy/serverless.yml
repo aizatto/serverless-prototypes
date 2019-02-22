@@ -1,0 +1,68 @@
+service: aws-apigateway-proxy
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  stage: dev
+  region: ap-southeast-1
+
+resources:
+  Resources:
+    ApiGatewayRestApi:
+      Type: AWS::ApiGateway::RestApi
+      Properties:
+        Name: ${self:service}-${self:provider.stage}
+    ApiGatewayResource:
+      Type: AWS::ApiGateway::Resource
+      Properties:
+        ParentId:
+          Fn::GetAtt:
+            - ApiGatewayRestApi
+            - RootResourceId
+        RestApiId:
+          Ref: ApiGatewayRestApi
+        PathPart: '{proxy+}'
+    ProxyMethod:
+      Type: AWS::ApiGateway::Method
+      Properties:
+        ResourceId:
+          Ref: ApiGatewayResource
+        RestApiId:
+          Ref: ApiGatewayRestApi
+        HttpMethod: GET
+        MethodResponses:
+          - StatusCode: 200
+        RequestParameters:
+          method.request.path.proxy: true
+        AuthorizationType: NONE
+        Integration:
+          IntegrationHttpMethod: GET
+          Type: HTTP_PROXY
+          Uri: 'http://build.my.s3-website-us-east-1.amazonaws.com/{proxy}'
+          PassthroughBehavior: WHEN_NO_MATCH
+          IntegrationResponses:
+            - StatusCode: 200
+          RequestParameters:
+            integration.request.path.proxy: 'method.request.path.proxy'
+    RootMethod:
+      Type: AWS::ApiGateway::Method
+      Properties:
+        ResourceId:
+          Fn::GetAtt:
+            - ApiGatewayRestApi
+            - RootResourceId
+        RestApiId:
+          Ref: ApiGatewayRestApi
+        HttpMethod: GET
+        MethodResponses:
+          - StatusCode: 200
+        RequestParameters:
+          method.request.path.proxy: true
+        AuthorizationType: NONE
+        Integration:
+          IntegrationHttpMethod: GET
+          Type: HTTP_PROXY
+          Uri: 'http://build.my.s3-website-us-east-1.amazonaws.com/'
+          PassthroughBehavior: WHEN_NO_MATCH
+          IntegrationResponses:
+            - StatusCode: 200
