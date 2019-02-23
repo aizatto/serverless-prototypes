@@ -15,3 +15,10 @@ What I use to create templates:
 ```sh
 serverless create --template hello-world --path $PATH
 ```
+
+# Keywords
+
+- Prototypes
+- Toys
+- Tests
+- Proof of Concepts

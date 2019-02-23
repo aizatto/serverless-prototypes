@@ -1,6 +1,6 @@
 # Goal
 
-A simple Serverless Python example demonstrating a Facebook Access Token into Parameter Store.
+A simple Serverless Python example demonstrating storing a Facebook Access Token into Parameter Store.
 
 - Store Facebook Access Token in Parameter Store for reuse
 - Build simple Facebook API
@@ -16,13 +16,18 @@ Stack:
   - AWS Parameter Store
   - Facebook Login
 
+
+My notes on Serverless: https://www.aizatto.com/notes/serverless
+
 # Disclaimers
 
 I understand if another user accesses the login page, it will overwrite the Facebook Access Token. I don't expect any other users for now. As a demo and example, I still think this repository is useful.
 
+I could have used something like AWS Cognito or Auth0, but I thought this was simpler. You'd probably want to use something like that if you were doing something in production.
+
 # Configuration
 
-On https://developers.facebook.com/apps/***REMOVED***/fb-login/settings/
+On https://developers.facebook.com/apps/$app_id/fb-login/settings/
 
 Products > Facebook Login > Settings
 
@@ -41,7 +46,7 @@ aws ssm put-parameter --name "/build.my/dev/FACEBOOK_CLIENT_ID" --value $app_id 
 aws ssm put-parameter --name "/build.my/dev/FACEBOOK_CLIENT_SECRET" --value $client_secret --type String --region ap-southeast-1
 ```
 
-Try login flow, and see if you cna get parameter
+Try login flow, and see if you can get parameter
 
 ```sh
 aws ssm get-parameter --name "/build.my/dev/FACEBOOK_ACCESS_TOKEN"
