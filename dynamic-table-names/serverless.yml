@@ -1,0 +1,18 @@
+service: dynamic-table-names
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: dev
+  region: ap-southeast-1
+  memorySize: 128
+  environment:
+    PETS_TABLE: ${self:custom.DYNAMODB.PETS_TABLE}
+    USERS_TABLE: ${self:custom.DYNAMODB.USERS_TABLE}
+
+functions:
+  hello:
+    handler: handler.hello
+
+custom:
+  DYNAMODB: ${file(./config.js)}

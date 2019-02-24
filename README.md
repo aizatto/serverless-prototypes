@@ -22,3 +22,7 @@ serverless create --template hello-world --path $PATH
 - Toys
 - Tests
 - Proof of Concepts
+
+# Useful URLs
+
+- https://github.com/serverless/examples
