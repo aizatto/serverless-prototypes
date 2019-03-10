@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@types/node": "^11.11.0",
+    "typescript": "^3.3.3333"
+  },
+  "devDependencies": {
+    "serverless-plugin-typescript": "^1.1.5"
+  }
+}
