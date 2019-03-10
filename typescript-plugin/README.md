@@ -3,6 +3,8 @@ Goal to compare TypeScript using:
 - Plugin: https://github.com/prisma/serverless-plugin-typescript
 - Template: https://github.com/serverless/serverless/tree/master/lib/plugins/create/templates/aws-nodejs-typescript 
 
+# Plugin
+
 It seems easier to use the plugin vs the template as you are not reliant on webpack.
 
 Created with
@@ -32,7 +34,11 @@ Pros:
 - No dependency on webpack
 - You can install local latest version of TypeScript
 
-You can remove your own version of TypeScript.
+Cons:
+- Only compiles the functions
+  - Doesn't compile other `.ts` files
+
+You can use your own version of TypeScript.
 
 Without any changes:
 ```sh
@@ -58,6 +64,8 @@ TypeScript Version: 3.3.3333
 
 What to do using Plugin:
 - Add `.build` to `.gitignore`
+- `yarn add @types/node`
+- Add `plugins: serverless-plugin-typescript`
 
 Test remotely:
 ```sh
@@ -70,6 +78,9 @@ Template can be created via:
 ```sh
 serverless create -t aws-nodejs-template --path typescript-template
 ```
+
+Pros:
+- Renders other `.ts` files
 
 Cons:
 - Dependency on WebPack
