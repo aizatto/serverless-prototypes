@@ -1,4 +1,4 @@
-service: aws-apigateway-proxy
+service: prototype-aws-apigateway-proxy
 
 provider:
   name: aws
