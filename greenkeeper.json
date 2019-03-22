@@ -1,0 +1,14 @@
+{
+  "groups": {
+    "default": {
+      "packages": [
+        "aws-apigateway-proxy/package.json",
+        "express-lambda/package.json",
+        "facebook-python3/package.json",
+        "messenger-bot/package.json",
+        "package.json",
+        "typescript-plugin/package.json"
+      ]
+    }
+  }
+}
