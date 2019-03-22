@@ -1,5 +1,7 @@
 # Serverless Prototypes
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/aizatto/serverless-prototypes.svg)](https://greenkeeper.io/)
+
 Goal:
 - Isolate larger goals of a serverless projects into smaller easier to deploy prototypes
 - Helps with isolation and reproducability
